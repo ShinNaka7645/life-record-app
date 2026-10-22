@@ -1,0 +1,1292 @@
+/* ==========================================================================
+  全体・リセット設定
+  ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  background-color: #f4f7f6;
+  color: #333333;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+  ヘッダー (Header)
+  ========================================================================== */
+header {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* タイトル部分 */
+.header-icon h3 {
+  color: #2c3e50;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* メニュー部分 */
+.header-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  list-style: none;
+}
+
+/* メニュー内のボタン基本スタイル */
+.header-menu button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+/* ユーザー名ボタン（リンク） */
+.header-menu li:first-child button {
+  background-color: #eef5f7;
+  border: 1px solid #2a6f9d;
+}
+
+.header-menu li:first-child button a {
+  display: inline-block;
+  padding: 8px 14px;
+  color: #2a6f9d;
+  text-decoration: none;
+}
+
+.header-menu li:first-child button:hover {
+  background-color: #2a6f9d;
+}
+
+.header-menu li:first-child button:hover a {
+  color: #ffffff;
+}
+
+/* メニューボタン */
+.header-menu li button {
+  background-color: #eef7f6;
+  border: 1px solid #2a9d8f;
+}
+
+.header-menu li button a {
+  display: inline-block;
+  padding: 8px 14px;
+  color: #2a9d8f;
+  text-decoration: none;
+}
+
+.header-menu li button:hover {
+  background-color: #2a9d8f;
+}
+
+.header-menu li button:hover a {
+  color: #ffffff;
+}
+
+/* ログアウトボタン */
+.header-menu form button {
+  background-color: #faf8f8;
+  color: #e23030;
+  border: 1px solid #e23030;
+  padding: 8px 14px;
+}
+
+.header-menu form button:hover {
+  background-color: #e23030;
+  color: #fff;
+}
+
+/* ==========================================================================
+  フラッシュメッセージ (Flash Messages)
+========================================================================== */
+.flash {
+  max-width: 800px;
+  margin: 16px auto 0;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: #e3f2fd; /* デフォルト：青系（通知） */
+  color: #0c5460;
+  border-left: 5px solid #17a2b8;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.3s ease-in-out;
+  /* ★ フェードアウト時の変化をスムーズにする設定を追加 */
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* ★ JavaScriptから .fade-out が付与されたときのスタイルを追加 */
+.flash.fade-out {
+  opacity: 0;
+  transform: translateY(-8px); /* 上に少し移動しながら消える */
+}
+
+/* 成功メッセージ（緑） */
+.flash.success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left-color: #28a745;
+}
+
+/* エラーメッセージ（赤） */
+.flash.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left-color: #dc3545;
+}
+
+/* 警告メッセージ（黄） */
+.flash.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-left-color: #ffc107;
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+  記録一覧画面共通 (Record Index - General Layout)
+  ========================================================================== */
+
+/* 全体コンテナ */
+.record-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 24px;
+}
+
+/* 画面見出しエリア */
+.record-header-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.record-header-title h1 {
+  font-size: 1.6rem;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+/* 記録追加ボタン（メインアクション） */
+.btn-primary-add {
+  background-color: #2a9d8f;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary-add a {
+  display: inline-block;
+  padding: 10px 18px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-primary-add:hover {
+  background-color: #218378;
+}
+
+/* 職員用 検索フィルターカード */
+.filter-card {
+  background-color: #ffffff;
+  padding: 20px 24px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-form label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+.filter-form select {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  outline: none;
+  min-width: 200px;
+}
+
+.filter-form select:focus {
+  border-color: #2a9d8f;
+  background-color: #ffffff;
+}
+
+.btn-search {
+  padding: 8px 16px;
+  background-color: #2c3e50;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-search:hover {
+  background-color: #1a252f;
+}
+
+/* 期間指定ナビゲーションバー */
+.week-navigation-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 16px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.week-period-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-name-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2a9d8f;
+}
+
+.period-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.week-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.week-nav-links a {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #495057;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.week-nav-links a:hover {
+  background-color: #eef7f6;
+  color: #2a9d8f;
+  border-color: #2a9d8f;
+}
+
+.week-nav-links a.btn-current-week {
+  background-color: #2a9d8f;
+  color: #ffffff;
+  border-color: #2a9d8f;
+}
+
+.week-nav-links a.btn-current-week:hover {
+  background-color: #218378;
+}
+
+/* ==========================================================================
+  記録テーブル (Record Table)
+  ========================================================================== */
+.table-wrapper {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow-x: auto; /* スマホで横スクロール可能に */
+  margin-bottom: 32px;
+}
+
+.record-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.92rem;
+  table-layout: fixed; /* ★列幅を固定化する指定 */
+}
+
+.record-table th {
+  background-color: #f1f5f9;
+  color: #334155;
+  font-weight: 700;
+  padding: 12px 10px;
+  border-bottom: 2px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+/* ★各列の幅指定（パーセンテージで固定化） */
+.record-table th:nth-child(1), .record-table td:nth-child(1) { width: 7%; }  /* 日付 */
+.record-table th:nth-child(2), .record-table td:nth-child(2) { width: 9%; }  /* 起床時間 */
+.record-table th:nth-child(3), .record-table td:nth-child(3) { width: 9%; }  /* 就寝時間 */
+.record-table th:nth-child(4), .record-table td:nth-child(4) { width: 11%; } /* 服薬時間 */
+.record-table th:nth-child(5), .record-table td:nth-child(5) { width: 13%; } /* 起床時のだるさ */
+.record-table th:nth-child(6), .record-table td:nth-child(6) { width: 13%; } /* 日中のだるさ */
+.record-table th:nth-child(7), .record-table td:nth-child(7) { width: 9%; }  /* 歩数 */
+.record-table th:nth-child(8), .record-table td:nth-child(8) { width: 22%; } /* メモ（長めの設定） */
+.record-table th:nth-child(9), .record-table td:nth-child(9) { width: 7%; }  /* 操作 */
+
+.record-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #333333;
+  vertical-align: middle;
+  word-wrap: break-word; /* メモ欄などの長い文章を折り返す */
+}
+
+.record-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* 日付リンク */
+.record-table td a {
+  color: #2a9d8f;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.record-table td a:hover {
+  text-decoration: underline;
+}
+
+/* だるさ・状態の強弱付け */
+.badge-fatigue-yes {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: #ffe3e3;
+  color: #d90429;
+  font-weight: 600;
+  border-radius: 4px;
+  font-size: 0.82rem;
+}
+
+.badge-fatigue-no {
+  color: #6c757d;
+}
+
+/* ==========================================================================
+  日々の記録 記入・編集画面 (Daily Record Form Page)
+  ========================================================================== */
+
+.record-form-container {
+  max-width: 560px;
+  margin: 40px auto;
+  padding: 36px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.record-form-container h1 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #eef7f6;
+}
+
+/* 各フォームグループ */
+.record-form-container .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.record-form-container .field-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 6px;
+}
+
+/* 入力要素（日付・時刻・数値・テキスト・テキストエリア）の統一スタイル */
+.record-form-container form input[type="text"],
+.record-form-container form input[type="date"],
+.record-form-container form input[type="time"],
+.record-form-container form input[type="number"],
+.record-form-container form select,
+.record-form-container form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #333333;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  outline: none;
+  font-family: inherit;
+}
+
+.record-form-container form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* フォーカス時スタイル */
+.record-form-container form input:focus,
+.record-form-container form select:focus,
+.record-form-container form textarea:focus {
+  background-color: #ffffff;
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+}
+
+/* チェックボックス（だるさ等のブール値項目）調整 */
+.record-form-container form input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #2a9d8f;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.record-form-container .checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #333333;
+  cursor: pointer;
+}
+
+/* 保存ボタン */
+.record-form-container form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background-color: #2a9d8f;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.record-form-container form button[type="submit"]:hover {
+  background-color: #218378;
+}
+
+.record-form-container form button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+/* 削除ボタン */
+.delete-btn {
+  width: 100%;
+  padding: 0; /* aタグにパディングを持たせるため0に */
+  background-color: #e63946;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 10px;
+}
+
+/* 内側の a タグの文字色を白にしてクリック領域を広げる */
+.delete-btn a {
+  display: block;
+  padding: 12px;
+  color: #ffffff !important; /* 強制的に白にする */
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.delete-btn:hover {
+  background-color: #d90429;
+}
+
+/* ==========================================================================
+  記録 削除確認画面 (Daily Record Delete Confirm Page)
+  ========================================================================== */
+
+.record-delete-container {
+  max-width: 520px;
+  margin: 40px auto;
+  padding: 36px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.record-delete-container h3 {
+  font-size: 1.25rem;
+  color: #d90429;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #ffe3e3;
+}
+
+/* 削除対象データの内訳グリッド */
+.delete-preview-grid {
+  background-color: #fff8f8;
+  border: 1px solid #f8d7da;
+  border-left: 4px solid #d90429;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  row-gap: 10px;
+  column-gap: 12px;
+  align-items: center;
+}
+
+.delete-preview-grid dt {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #6c757d;
+}
+
+.delete-preview-grid dd {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2c3e50;
+  word-break: break-all;
+}
+
+/* 実行ボタン（削除） */
+.record-delete-container form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #e63946;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.record-delete-container form button[type="submit"]:hover {
+  background-color: #d90429;
+}
+
+/* 共通の戻るボタン領域 */
+.record-form-container .back-wrapper,
+.record-delete-container .back-wrapper {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.record-form-container .back-btn,
+.record-delete-container .back-btn {
+  display: inline-block;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.record-form-container .back-btn a,
+.record-delete-container .back-btn a {
+  display: block;
+  padding: 10px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.record-form-container .back-btn:hover,
+.record-delete-container .back-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.record-form-container .back-btn:hover a,
+.record-delete-container .back-btn:hover a {
+  color: #495057;
+}
+
+/* ==========================================================================
+  振り返り・コメント カード (Review & Comment Cards)
+  ========================================================================== */
+.card-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.info-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.info-card h3 {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #eef7f6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-body-text {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 0.92rem;
+  color: #333333;
+  line-height: 1.6;
+  flex-grow: 1;
+  min-height: 90px;
+  margin-bottom: 16px;
+}
+
+.card-footer-info {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 12px;
+  text-align: right;
+  font-weight: 600;
+}
+
+/* カード内ボタン操作グループ */
+.card-btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.btn-card-action {
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #2a9d8f;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-card-action a {
+  display: block;
+  padding: 8px;
+  color: #2a9d8f;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-card-action:hover {
+  background-color: #2a9d8f;
+}
+
+.btn-card-action:hover a {
+  color: #ffffff;
+}
+
+/* 削除用赤ボタン */
+.btn-card-delete {
+  border-color: #e63946;
+}
+
+.btn-card-delete a {
+  color: #e63946;
+}
+
+.btn-card-delete:hover {
+  background-color: #e63946;
+}
+
+.btn-card-delete:hover a {
+  color: #ffffff;
+}
+
+/* 空の状態（記録なしメッセージ等） */
+.empty-msg {
+  color: #6c757d;
+  font-size: 0.9rem;
+  padding: 20px;
+  text-align: center;
+}
+
+/* ==========================================================================
+  振り返り 記入・編集画面 (Week Review Form Page)
+  ========================================================================== */
+
+.review-form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 36px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.review-form-container h1 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.review-period-subtitle {
+  font-size: 0.95rem;
+  color: #6c757d;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #eef7f6;
+}
+
+/* 振り返り用テキストエリアの調整 */
+.review-form-container form textarea {
+  width: 100%;
+  min-height: 160px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333333;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  outline: none;
+  resize: vertical; /* ユーザーが縦方向にリサイズ可能 */
+  font-family: inherit;
+}
+
+.review-form-container form textarea:focus {
+  background-color: #ffffff;
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+}
+
+/* 保存ボタン */
+.review-form-container form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  background-color: #2a9d8f;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.review-form-container form button[type="submit"]:hover {
+  background-color: #218378;
+}
+
+.review-form-container form button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+/* ==========================================================================
+  振り返り 削除確認画面 (Week Review Delete Confirm Page)
+  ========================================================================== */
+
+.delete-confirm-container {
+  max-width: 520px;
+  margin: 40px auto;
+  padding: 36px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.delete-confirm-container h3 {
+  font-size: 1.25rem;
+  color: #d90429; /* 警告赤色 */
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #ffe3e3;
+}
+
+/* プレビュー表示（対象日・削除対象テキスト） */
+.delete-info-group {
+  margin-bottom: 16px;
+}
+
+.delete-info-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.delete-info-group .period-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.delete-preview-box {
+  background-color: #fff8f8;
+  border: 1px solid #f8d7da;
+  border-left: 4px solid #d90429;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 0.92rem;
+  color: #333333;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  margin-bottom: 24px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* 削除ボタン（赤系警告） */
+.delete-confirm-container form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #e63946;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.delete-confirm-container form button[type="submit"]:hover {
+  background-color: #d90429;
+}
+
+.delete-confirm-container form button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+/* 共通の戻るボタン領域 */
+.review-form-container .back-wrapper,
+.delete-confirm-container .back-wrapper {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.review-form-container .back-btn,
+.delete-confirm-container .back-btn {
+  display: inline-block;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.review-form-container .back-btn a,
+.delete-confirm-container .back-btn a {
+  display: block;
+  padding: 10px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.review-form-container .back-btn:hover,
+.delete-confirm-container .back-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.review-form-container .back-btn:hover a,
+.delete-confirm-container .back-btn:hover a {
+  color: #495057;
+}
+
+/* ==========================================================================
+  職員コメント 記入・編集・削除共通 (Staff Comment Form & Delete)
+  ========================================================================== */
+
+/* フォームエラーメッセージ */
+.form-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+  border-left: 4px solid #dc3545;
+}
+
+/* フォームグループ内のラベル調整 */
+.review-form-container .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.review-form-container .field-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #495057;
+  margin-bottom: 8px;
+}
+
+/* ==========================================================================
+  面談記録一覧 (Meeting Record Index)
+  ========================================================================== */
+.meeting-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 24px;
+}
+
+/* 一覧カードグループ */
+.meeting-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 個別面談カード */
+.meeting-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 20px 24px;
+  border-left: 4px solid #2a9d8f;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.meeting-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* カードヘッダー（利用者名・面談日） */
+.meeting-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.meeting-user-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.meeting-user-name span {
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.meeting-date-badge {
+  background-color: #eef7f6;
+  color: #2a9d8f;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid #2a9d8f;
+}
+
+/* カード本文（記録内容） */
+.meeting-card-body {
+  margin-bottom: 16px;
+}
+
+.meeting-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #6c757d;
+  margin-bottom: 6px;
+}
+
+.meeting-content-text {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  color: #333333;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* カードフッター（職員名・記録日・更新日） */
+.meeting-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #6c757d;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.staff-name {
+  font-weight: 600;
+  color: #495057;
+}
+
+.record-timestamps {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.updated-at {
+  color: #8c98a4;
+}
+
+/* 面談記録なしの表示カード */
+.empty-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #6c757d;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+  ページネーション (Pagination)
+  ========================================================================== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* ==========================================================================
+  面談記録 削除確認画面 (Meeting Record Delete Confirm Page)
+  ========================================================================== */
+
+/* 全体コンテナ（幅を少し広げて余白にゆとりを持たせる） */
+.meeting-delete-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 36px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.meeting-delete-container h3 {
+  font-size: 1.25rem;
+  color: #d90429;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #ffe3e3;
+}
+
+/* 確認カード */
+.meeting-delete-card {
+  background-color: #fff8f8;
+  border: 1px solid #f8d7da;
+  border-left: 4px solid #d90429;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+/* 2列並びにするヘッダー情報（職員名・利用者名など） */
+.meeting-delete-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 20px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px dashed #f5c6cb;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-item .label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6c757d;
+  margin-bottom: 2px;
+}
+
+.meta-item .value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* 長文となる記録内容エリア */
+.meeting-delete-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.meeting-delete-content .label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6c757d;
+  margin-bottom: 6px;
+}
+
+.meeting-delete-content .content-body {
+  background-color: #ffffff;
+  border: 1px solid #f1c2c6;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 0.92rem;
+  color: #333333;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* 削除実行ボタン */
+.meeting-delete-container form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #e63946;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.meeting-delete-container form button[type="submit"]:hover {
+  background-color: #d90429;
+}
+
+/* 戻るボタンエリア */
+.meeting-delete-container .back-wrapper {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.meeting-delete-container .back-btn {
+  display: inline-block;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.meeting-delete-container .back-btn a {
+  display: block;
+  padding: 10px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.meeting-delete-container .back-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+/* ワークシート用 追加調整 */
+.empty-content {
+  color: #8c98a4;
+  font-style: italic;
+}
+
+.staff-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+}
+
+.staff-label {
+  font-weight: 700;
+  color: #6c757d;
+}

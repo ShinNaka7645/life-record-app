@@ -1,0 +1,55 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}削除確認{% endblock %}
+
+{% block content %}
+<div class="meeting-delete-container">
+  <h3>⚠️ この面談記録を削除しますか？</h3>
+
+  <div class="meeting-delete-card">
+    <!-- 属性情報（2列レイアウトでスッキリ表示） -->
+    <div class="meeting-delete-meta">
+      <div class="meta-item">
+        <span class="label">対象の利用者</span>
+        <span class="value">{{ meeting_record.user.last_name }} {{ meeting_record.user.first_name }}</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">担当職員</span>
+        <span class="value">{{ meeting_record.staff.last_name }} {{ meeting_record.staff.first_name }}</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">面談日</span>
+        <span class="value">{{ meeting_record.meeting_date|date:'Y年m月d日' }}</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">記録日</span>
+        <span class="value">
+          {{ meeting_record.created|date:'Y/m/d' }}
+          {% if meeting_record.created != meeting_record.updated %}
+            （更新: {{ meeting_record.updated|date:'Y/m/d' }}）
+          {% endif %}
+        </span>
+      </div>
+    </div>
+
+    <!-- 記録本文エリア（縦方向に独立させて見やすく表示） -->
+    <div class="meeting-delete-content">
+      <span class="label">記録内容</span>
+      <div class="content-body">{{ meeting_record.content }}</div>
+    </div>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">削除する</button>
+  </form>
+
+  <div class="back-wrapper">
+    <button class="back-btn">
+      <a href="{% url "meeting_records" %}?page={{ page }}&user_id={{ user_id }}">
+        キャンセルして戻る
+      </a>
+    </button>
+  </div>
+</div>
+{% endblock %}

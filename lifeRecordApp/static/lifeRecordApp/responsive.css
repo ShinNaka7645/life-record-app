@@ -1,0 +1,136 @@
+/* ==========================================================================
+  スマホ・レスポンシブ対応
+========================================================================== */
+
+@media (max-width: 480px) {
+  /* ログイン画面 */
+  .auth-container {
+    margin: 20px 16px;
+    padding: 24px 20px;
+  }
+
+  /* ユーザー情報画面 */
+  .user-detail-container {
+    margin: 20px 16px;
+    padding: 24px 20px;
+  }
+
+  .user-info-list {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+  }
+
+  .user-info-list dt {
+    text-align: left;
+    margin-top: 8px;
+  }
+
+  .user-info-list dd {
+    padding-left: 8px;
+    margin-bottom: 12px;
+  }
+
+  /* ユーザー情報編集画面 */
+  .user-edit-container {
+    margin: 20px 16px;
+    padding: 24px 20px;
+  }
+
+  /* パスワード変更画面 & 変更完了画面 */
+  .pw-change-container,
+  .pw-done-container {
+    margin: 20px 16px;
+    padding: 24px 20px;
+  }
+
+  /* 日々の記録 記入・編集・削除画面 */
+  .record-form-container,
+  .record-delete-container {
+    margin: 20px 16px;
+    padding: 24px 20px;
+  }
+
+  .delete-preview-grid {
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
+
+  .delete-preview-grid dt {
+    margin-top: 8px;
+  }
+
+  /* 振り返り 記入・編集・削除画面 */
+  .review-form-container,
+  .delete-confirm-container {
+    margin: 20px 16px;
+    padding: 24px 20px;
+  }
+}
+
+/* ヘッダ */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .header-icon h3 {
+    font-size: 1.1rem;
+  }
+
+  .header-menu {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .flash {
+    margin: 12px 16px 0;
+  }
+}
+
+/* 記録一覧画面 */
+@media (max-width: 768px) {
+  .record-container {
+    padding: 16px;
+  }
+
+  .record-header-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .week-navigation-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .week-nav-links {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .card-section {
+    grid-template-columns: 1fr; /* スマホでは上下2段に */
+  }
+}
+
+/* 面談記録一覧 レスポンシブ対応 */
+@media (max-width: 600px) {
+  .meeting-container {
+    padding: 0 16px;
+  }
+
+  .meeting-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .meeting-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

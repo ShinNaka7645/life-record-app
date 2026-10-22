@@ -1,0 +1,104 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}ワークシート一覧{% endblock %}
+
+{% block content %}
+<div class="meeting-container">
+  <div class="record-header-title">
+    <h1>ワークシート一覧</h1>
+    <button class="btn-primary-add">
+      <a href="{% url "worksheet_create" %}">＋ シートの追加</a>
+    </button>
+  </div>
+
+  {% if worksheets %}
+    <div class="meeting-list">
+      {% for worksheet in worksheets %}
+        <div class="meeting-card">
+          <div class="meeting-card-header">
+            <div class="meeting-user-name">
+              <span>対象者:</span> {{ worksheet.user.last_name }} {{ worksheet.user.first_name }}
+            </div>
+            <div class="meeting-date-badge">
+              面談日: {{ worksheet.meeting_date|date:'Y年m月d日' }}
+            </div>
+          </div>
+
+          <!-- 本文エリア：取り組み内容とフィードバックを並べる -->
+          <div class="meeting-card-body">
+            <div class="worksheet-section">
+              <label class="meeting-label">今月取り組むこと</label>
+              <div class="meeting-content-text">{{ worksheet.works|linebreaksbr }}</div>
+            </div>
+
+            <div class="worksheet-section" style="padding-top: 10px;">
+              <label class="meeting-label">1か月後の気づき・感想</label>
+              {% if worksheet.thoughts %}
+                <div class="meeting-content-text">{{ worksheet.thoughts|linebreaksbr }}</div>
+              {% else %}
+                <div class="meeting-content-text empty-content">未記入</div>
+              {% endif %}
+            </div>
+
+            <div class="worksheet-section" style="margin-top: 16px;">
+              <label class="meeting-label">スタッフからのフィードバック</label>
+              {% if worksheet.feedback %}
+                <div class="meeting-content-text">{{ worksheet.feedback|linebreaksbr }}</div>
+              {% else %}
+                <div class="meeting-content-text empty-content">フィードバックはまだありません。</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- フッターエリア：担当職員と操作ボタンのみを横並び配置 -->
+          <div class="meeting-card-footer">
+            <div class="staff-info">
+              <span class="staff-label">担当職員:</span>
+              <span class="staff-name">
+                {% if worksheet.staff %}
+                  {{ worksheet.staff.last_name }} {{ worksheet.staff.first_name }}
+                {% else %}
+                  未設定
+                {% endif %}
+              </span>
+            </div>
+
+            <!-- 面談日が「先月」か「今月」の場合のみボタンを表示 -->
+            {% if worksheet.meeting_date.year == last_month_year and worksheet.meeting_date.month >= last_month_num %}
+              <div class="card-btn-group" style="margin-top: 0; min-width: 140px;">
+                <button class="btn-card-action">
+                  <a href="{% url "worksheet_update" worksheet.id %}?page={{ worksheets.number }}">
+                    編集
+                  </a>
+                </button>
+                <button class="btn-card-action btn-card-delete">
+                  <a href="{% url "worksheet_delete" worksheet.id %}?page={{ worksheets.number }}">
+                    削除
+                  </a>
+                </button>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="pagination">
+      {% if worksheets.has_previous %}
+        <a href="?page={{ worksheets.previous_page_number }}">&laquo; 前へ</a>
+      {% endif %}
+
+      <span>{{ worksheets.number }} / {{ worksheets.paginator.num_pages }} ページ</span>
+
+      {% if worksheets.has_next %}
+        <a href="?page={{ worksheets.next_page_number }}">次へ &raquo;</a>
+      {% endif %}
+    </div>
+
+  {% else %}
+    <div class="empty-card">
+      <p>ワークシートがありません。</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

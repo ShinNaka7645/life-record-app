@@ -1,0 +1,95 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}面談記録一覧{% endblock %}
+
+{% block content %}
+<div class="meeting-container">
+  <div class="record-header-title">
+    <h1>面談記録一覧</h1>
+    <button class="btn-primary-add">
+      <a href="{% url "meeting_record_create" %}">＋ 記録の追加</a>
+    </button>
+  </div>
+
+  <!-- 利用者選択ドロップダウン -->
+  <div class="filter-card">
+    <form action="{% url "meeting_records" %}" method="GET" class="filter-form">
+      <label for="username">利用者名:</label>
+      <select name="user_id" id="username" onchange="this.form.submit()">
+        <option value="">利用者名を選択してください</option>
+        {% for user in users %}
+          <option value="{{ user.id }}" {% if request.GET.user_id == user.id|stringformat:"i" or selected_user.id == user.id %}selected{% endif %}>
+            {{ user.last_name }} {{ user.first_name }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+
+  {% if meeting_records %}
+    <div class="meeting-list">
+      {% for record in meeting_records %}
+        <div class="meeting-card">
+          <div class="meeting-card-header">
+            <div class="meeting-user-name">
+              <span>対象者:</span> {{ record.user.last_name }} {{ record.user.first_name }}
+            </div>
+            <div class="meeting-date-badge">
+              面談日: {{ record.meeting_date|date:'Y年m月d日' }}
+            </div>
+          </div>
+
+          <div class="meeting-card-body">
+            <label class="meeting-label">記録内容</label>
+            <div class="meeting-content-text">{{ record.content|linebreaksbr }}</div>
+          </div>
+
+          <div class="meeting-card-footer">
+            <span class="staff-name">担当職員: {{ record.staff.last_name }} {{ record.staff.first_name }}</span>
+            <div class="record-timestamps">
+              <span>記録日: {{ record.created|date:'Y/m/d' }}</span>
+              {% if record.created != record.updated %}
+                <span class="updated-at">（更新日: {{ record.updated|date:'Y/m/d' }}）</span>
+              {% endif %}
+            </div>
+
+            <!-- ★ 面談日が「先月」の場合のみボタンを表示 -->
+            {% if record.meeting_date.year == last_month_year and record.meeting_date.month >= last_month_num %}
+              <div class="card-btn-group" style="margin-top: 0; min-width: 140px;">
+                <button class="btn-card-action">
+                  <a href="{% url 'meeting_record_update' record.id %}?page={{ meeting_records.number }}">
+                    編集
+                  </a>
+                </button>
+                <button class="btn-card-action btn-card-delete">
+                  <a href="{% url 'meeting_record_delete' record.id %}?page={{ meeting_records.number }}">
+                    削除
+                  </a>
+                </button>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- ★ ページネーション（UI表示部分） -->
+    <div class="pagination">
+      {% if meeting_records.has_previous %}
+        <a href="?page={{ meeting_records.previous_page_number }}&user_id={{ user_id }}">&laquo; 前へ</a>
+      {% endif %}
+
+      <span>{{ meeting_records.number }} / {{ meeting_records.paginator.num_pages }} ページ</span>
+
+      {% if meeting_records.has_next %}
+        <a href="?page={{ meeting_records.next_page_number }}&user_id={{ user_id }}">次へ &raquo;</a>
+      {% endif %}
+    </div>
+
+  {% else %}
+    <div class="empty-card">
+      <p>面談記録がありません。</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

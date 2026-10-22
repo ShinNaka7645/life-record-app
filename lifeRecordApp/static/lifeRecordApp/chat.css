@@ -1,0 +1,305 @@
+/* chat.css - チャット機能共通スタイル */
+
+/* コンテナ・全体レイアウト */
+.chat-container {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #f7f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+}
+
+.staff-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 15px;
+}
+
+/* ヘッダー */
+.chat-header {
+  color: black;
+  padding: 14px 20px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.chat-header.user-header {
+  background: #4a90e2;
+  font-size: 1.1rem;
+}
+
+.chat-header.staff-header {
+  background: #343a40;
+}
+
+.back-btn {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* メッセージ表示エリア */
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+}
+
+.message-wrapper.mine {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.message-wrapper.other {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.message-wrapper.system {
+  align-self: center;
+  max-width: 90%;
+  margin: 10px 0;
+}
+
+.sender-name {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 3px;
+  padding: 0 4px;
+}
+
+/* 吹き出しスタイル */
+.message-bubble {
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* 利用者送信時（緑） */
+.user-theme .mine .message-bubble {
+  background-color: #25d366;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+
+/* 職員送信時（青） */
+.staff-theme .mine .message-bubble {
+  background-color: #0d6efd;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+
+.other .message-bubble {
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #e0e0e0;
+  border-bottom-left-radius: 4px;
+}
+
+.system .message-bubble {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.timestamp {
+  font-size: 0.7rem;
+  color: #999;
+  margin-top: 3px;
+  padding: 0 4px;
+}
+
+/* メッセージ入力エリア */
+.chat-input-area {
+  padding: 15px;
+  background: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.chat-input:focus {
+  border-color: #4a90e2;
+}
+
+.send-btn {
+  color: #fff;
+  border: none;
+  padding: 0 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.user-theme .send-btn {
+  background: #4a90e2;
+}
+.user-theme .send-btn:hover {
+  background: #357abd;
+}
+
+.staff-theme .send-btn {
+  background: #0d6efd;
+}
+.staff-theme .send-btn:hover {
+  background: #0b5ed7;
+}
+
+/* 職員用：利用者選択カード */
+.page-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.user-card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 15px;
+}
+
+.user-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.user-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-color: #4a90e2;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.user-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.action-label {
+  align-self: flex-end;
+  font-size: 0.85rem;
+  color: #4a90e2;
+  font-weight: bold;
+}
+
+/* --- ヘッダーチャットボタン＆未読バッジ --- */
+.chat-btn-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unread-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: #ff3b30;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* --- 職員用カードの未読バッジスタイル --- */
+.user-card {
+  position: relative; /* バッジの位置基準とするため追加 */
+}
+
+.card-unread-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff3b30;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 10;
+}

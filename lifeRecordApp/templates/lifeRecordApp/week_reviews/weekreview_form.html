@@ -1,0 +1,46 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}{% if week_review %}振り返り編集{% else %}振り返り作成{% endif %}{% endblock %}
+
+{% block content %}
+<div class="review-form-container">
+  <h1>1週間の振り返り</h1>
+  <div class="review-period-subtitle">
+    期間: {{ start_date|date:"Y/m/d" }} ～ {{ end_date|date:"Y/m/d" }}
+  </div>
+
+  <form method="POST" novalidate>
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="non-field-errors">
+        {% for error in form.non_field_errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% for field in form %}
+      <div class="form-group {% if field.errors %}has-error{% endif %}">
+        {% if field.errors %}
+          {% for error in field.errors %}
+            <div class="form-error">
+              {{ error }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        
+        {{ field }}
+      </div>
+    {% endfor %}
+
+    <button type="submit">保存</button>
+  </form>
+
+  <div class="back-wrapper">
+    <button class="back-btn">
+      <a href="{% url "record_index" %}?date={{ start_date_str }}">記録一覧へ戻る</a>
+    </button>
+  </div>
+</div>
+{% endblock %}

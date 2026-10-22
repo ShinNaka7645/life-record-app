@@ -1,0 +1,35 @@
+{% extends 'lifeRecordApp/base.html' %}
+
+{% block content %}
+<div class="staff-container">
+  <div class="page-title">
+    👥 チャット対象の利用者を選択
+  </div>
+
+  <div class="user-card-list">
+    {% for u in users %}
+      <a href="{% url 'staff_chat_detail' u.id %}" class="user-card">
+        {% if u.unread_count > 0 %}
+          <span class="card-unread-badge">
+            {% if u.unread_count > 99 %}99+{% else %}{{ u.unread_count }}{% endif %}
+          </span>
+        {% endif %}
+        
+        <div class="user-info">
+          <div class="user-avatar">
+            {{ u.username|slice:":1"|first|upper }}
+          </div>
+          <div class="user-name">
+            {{ u.last_name }} {{ u.first_name }}
+          </div>
+        </div>
+        <div class="action-label">
+          チャットを開く →
+        </div>
+      </a>
+    {% empty %}
+      <p style="color: #666;">対象となる利用者が登録されていません。</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

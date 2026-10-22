@@ -1,0 +1,744 @@
+/* ==========================================================================
+  ログイン・ユーザー認証画面 (Login / Auth Pages)
+  ========================================================================== */
+
+/* ログイン画面全体を中央に配置するコンテナ */
+.auth-container {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 36px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+/* タイトルエリア */
+.auth-container h1 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.auth-container h3 {
+  font-size: 1.1rem;
+  color: #6c757d;
+  font-weight: 600;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #eef7f6;
+  padding-bottom: 12px;
+}
+
+/* Django {{ form.as_p }} フォーム要素のスタイル */
+.auth-container form p {
+  margin-bottom: 18px;
+  text-align: left; /* ラベルと入力欄は左揃え */
+}
+
+.auth-container form label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 6px;
+}
+
+.auth-container form input[type="text"],
+.auth-container form input[type="password"],
+.auth-container form input[type="email"] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #333333;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+/* 入力フィールドのフォーカス時効果 */
+.auth-container form input[type="text"]:focus,
+.auth-container form input[type="password"]:focus,
+.auth-container form input[type="email"]:focus {
+  background-color: #ffffff;
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+}
+
+/* ログインボタン（プライマリボタン） */
+.auth-container form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #2a9d8f;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.auth-container form button[type="submit"]:hover {
+  background-color: #218378;
+}
+
+.auth-container form button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+/* 新規登録ボタン・リンクエリア */
+.auth-container .signup-wrapper {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.auth-container .signup-btn {
+  display: inline-block;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #2a9d8f;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.auth-container .signup-btn a {
+  display: block;
+  padding: 10px;
+  color: #2a9d8f;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-container .signup-btn:hover {
+  background-color: #eef7f6;
+}
+
+/* フォームエラーメッセージ用（Django標準エラー対応） */
+.auth-container .errorlist {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 10px;
+  color: #dc3545;
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+/* ==========================================================================
+   新規登録画面 (Signup Page)
+   ========================================================================== */
+
+/* フォーム全体のフィールドグループ */
+.auth-container .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* ラベルのスタイル (pタグで出力されているため) */
+.auth-container .field-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 6px;
+}
+
+/* Djangoが生成する各種input要素への一括スタイル適用 */
+.auth-container form input[type="text"],
+.auth-container form input[type="password"],
+.auth-container form input[type="email"],
+.auth-container form input[type="number"],
+.auth-container form select,
+.auth-container form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #333333;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+/* フォーカス時の強調 */
+.auth-container form input[type="text"]:focus,
+.auth-container form input[type="password"]:focus,
+.auth-container form input[type="email"]:focus,
+.auth-container form input[type="number"]:focus,
+.auth-container form select:focus,
+.auth-container form textarea:focus {
+  background-color: #ffffff;
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+}
+
+/* エラーがある入力欄のスタイル強調 */
+.auth-container .has-error input {
+  border-color: #e63946 !important;
+  background-color: #fff8f8;
+}
+
+/* エラーメッセージ（.form-error）の見た目 */
+.form-error {
+  background-color: #fce8e6;
+  color: #d90429;
+  border: 1px solid #f8d7da;
+  border-left: 4px solid #d90429;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+/* フォーム全体のエラー (non_field_errors) */
+.non-field-errors {
+  margin-bottom: 16px;
+}
+
+/* ヘルプテキスト (Djangoパスワード要件などの補足文章) */
+.auth-container .help-text {
+  display: block;
+  font-size: 0.78rem;
+  color: #6c757d;
+  margin-top: 5px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.auth-container .help-text ul {
+  padding-left: 18px;
+  margin-top: 4px;
+}
+
+/* 登録ボタン */
+.auth-container form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background-color: #2a9d8f;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.auth-container form button[type="submit"]:hover {
+  background-color: #218378;
+}
+
+.auth-container form button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+/* 戻るボタン・リンクエリア */
+.auth-container .back-wrapper {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.auth-container .back-btn {
+  display: inline-block;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #6c757d;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.auth-container .back-btn a {
+  display: block;
+  padding: 10px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-container .back-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #495057;
+}
+
+.auth-container .back-btn:hover a {
+  color: #343a40;
+}
+
+/* ==========================================================================
+  ユーザー情報画面 (User Detail Page)
+  ========================================================================== */
+
+/* カードコンテナ (幅を少し広めに確保) */
+.user-detail-container {
+  max-width: 540px;
+  margin: 40px auto;
+  padding: 36px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* 画面メインタイトル */
+.user-detail-container h1 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #eef7f6;
+}
+
+/* ユーザー情報リスト（dlタグ構造） */
+.user-info-list {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  row-gap: 16px;
+  column-gap: 12px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+/* 見出し (見出しラベル) */
+.user-info-list dt {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6c757d;
+  background-color: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* 値 (実際のデータ) */
+.user-info-list dd {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333333;
+  padding: 8px 4px;
+  word-break: break-all; /* 長いメールアドレスなどの溢れ防止 */
+}
+
+/* ステータスバッジ（職員/利用者） */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+/* 職員バッジ */
+.status-badge.staff {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+/* 利用者バッジ */
+.status-badge.user {
+  background-color: #eef7f6;
+  color: #2a9d8f;
+  border: 1px solid #2a9d8f;
+}
+
+/* アクションボタンエリア */
+.user-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+/* 共通ボタン基本スタイル */
+.user-actions button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.user-actions button a {
+  display: block;
+  padding: 11px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* 編集ボタン (プライマリ) */
+.user-actions .btn-edit {
+  background-color: #2a9d8f;
+  border: 1px solid #2a9d8f;
+}
+
+.user-actions .btn-edit a {
+  color: #ffffff;
+}
+
+.user-actions .btn-edit:hover {
+  background-color: #218378;
+  border-color: #218378;
+}
+
+/* 一覧へ戻るボタン (セカンダリ) */
+.user-actions .btn-back {
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+}
+
+  .user-actions .btn-back a {
+  color: #6c757d;
+}
+
+.user-actions .btn-back:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.user-actions .btn-back:hover a {
+  color: #495057;
+}
+
+/* ==========================================================================
+  ユーザー情報編集画面 (User Edit / Update Page)
+  ========================================================================== */
+
+/* 編集画面のカードコンテナ */
+.user-edit-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 36px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* 画面メインタイトル */
+.user-edit-container h1 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #eef7f6;
+}
+
+/* 各入力項目グループ */
+.user-edit-container .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* ラベルのスタイル */
+.user-edit-container .field-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 6px;
+}
+
+/* Django入力フォーム共通スタイル */
+.user-edit-container form input[type="text"],
+.user-edit-container form input[type="password"],
+.user-edit-container form input[type="email"],
+.user-edit-container form select,
+.user-edit-container form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #333333;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+/* フォーカス時の強調 */
+.user-edit-container form input[type="text"]:focus,
+.user-edit-container form input[type="password"]:focus,
+.user-edit-container form input[type="email"]:focus,
+.user-edit-container form select:focus,
+.user-edit-container form textarea:focus {
+  background-color: #ffffff;
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+}
+
+/* エラー時の入力欄ハイライト */
+.user-edit-container .has-error input {
+  border-color: #e63946 !important;
+  background-color: #fff8f8;
+}
+
+/* 変更保存（送信）ボタン */
+.user-edit-container form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background-color: #2a9d8f;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.user-edit-container form button[type="submit"]:hover {
+  background-color: #218378;
+}
+
+.user-edit-container form button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+/* 戻るボタンエリア */
+.user-edit-container .back-wrapper {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.user-edit-container .back-btn {
+  display: inline-block;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.user-edit-container .back-btn a {
+  display: block;
+  padding: 10px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.user-edit-container .back-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.user-edit-container .back-btn:hover a {
+  color: #495057;
+}
+
+/* ==========================================================================
+  パスワード変更画面 & 変更完了画面 (Password Change Pages)
+  ========================================================================== */
+
+/* 1. パスワード変更画面カード */
+.pw-change-container {
+  max-width: 460px;
+  margin: 40px auto;
+  padding: 36px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.pw-change-container h1 {
+  font-size: 1.4rem;
+  color: #2c3e50;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #eef7f6;
+}
+
+/* フォーム領域内の段落・入力欄（form.as_p 構造への対応） */
+.pw-change-container form p {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.pw-change-container form label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 6px;
+}
+
+.pw-change-container form input[type="password"] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #333333;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.pw-change-container form input[type="password"]:focus {
+  background-color: #ffffff;
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.15);
+}
+
+/* パスワード要件等のヘルプテキスト */
+.pw-change-container form .helptext {
+  display: block;
+  font-size: 0.78rem;
+  color: #6c757d;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.pw-change-container form .helptext ul {
+  padding-left: 18px;
+  margin-top: 4px;
+}
+
+/* 実行ボタン */
+.pw-change-container form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  background-color: #2a9d8f;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.pw-change-container form button[type="submit"]:hover {
+  background-color: #218378;
+}
+
+.pw-change-container form button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+/* 戻るエリア */
+.pw-change-container .back-wrapper {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.pw-change-container .back-btn {
+  display: inline-block;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.pw-change-container .back-btn a {
+  display: block;
+  padding: 10px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.pw-change-container .back-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.pw-change-container .back-btn:hover a {
+  color: #495057;
+}
+
+/* --------------------------------------------------------------------------
+  2. パスワード変更完了画面 (password_change_done.html)
+  -------------------------------------------------------------------------- */
+.pw-done-container {
+  max-width: 460px;
+  margin: 40px auto;
+  padding: 40px 32px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+/* チェックマーク風の成功アイコン表示 */
+.pw-done-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  background-color: #eef7f6;
+  color: #2a9d8f;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.pw-done-container h1 {
+  font-size: 1.35rem;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.pw-done-container p {
+  font-size: 0.95rem;
+  color: #495057;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* 次のアクションボタン */
+.pw-done-container .action-btn {
+  display: inline-block;
+  width: 100%;
+  background-color: #2a9d8f;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.pw-done-container .action-btn a {
+  display: block;
+  padding: 12px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.pw-done-container .action-btn:hover {
+  background-color: #218378;
+}
+

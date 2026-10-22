@@ -1,0 +1,58 @@
+[
+  {
+    "model": "lifeRecordApp.record",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "record_date": "2026-07-30",
+      "getup_time": "07:30:00",
+      "sleep_time": "23:30:00",
+      "medicine_time": "23:30:00",
+      "fatigue_getup": false,
+      "fatigue_wholeday": false,
+      "steps": 3813,
+      "memo": ""
+    }
+  }, 
+  {
+    "model": "lifeRecordApp.record",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "record_date": "2026-07-31",
+      "getup_time": "08:00:00",
+      "sleep_time": "00:00:00",
+      "medicine_time": null,
+      "fatigue_getup": false,
+      "fatigue_wholeday": false,
+      "steps": 3728,
+      "memo": ""
+    }
+  },
+  {
+    "model": "lifeRecordApp.record",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "record_date": "2026-08-01",
+      "getup_time": "08:30:00",
+      "sleep_time": "23:30:00",
+      "medicine_time": null,
+      "fatigue_getup": false,
+      "fatigue_wholeday": false,
+      "steps": 4676,
+      "memo": "昨夜寝る前にストレッチをしたら、自然と眠れました。"
+    }
+  },
+  {
+    "model": "lifeRecordApp.record",
+    "pk": 4,
+    "fields": {
+      "user": 3,
+      "record_date": "2026-08-02",
+      "getup_time": "08:30:00",
+      "sleep_time": "00:30:00",
+      "medicine_time": null,
+      "fatigue_getup": false,
+      "fatigue_wholeday": false,
+      "steps": 7210, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 5, "fields": {"user": 3, "record_date": "2026-08-03", "getup_time": "06:10:00", "sleep_time": "23:30:00", "medicine_time": null, "fatigue_getup": true, "fatigue_wholeday": true, "steps": 93, "memo": "中途覚醒してからずっと寝付けませんでした。"}}, {"model": "lifeRecordApp.record", "pk": 6, "fields": {"user": 3, "record_date": "2026-08-04", "getup_time": "07:30:00", "sleep_time": "00:00:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 4509, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 7, "fields": {"user": 3, "record_date": "2026-08-05", "getup_time": "07:30:00", "sleep_time": "00:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 3723, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 8, "fields": {"user": 3, "record_date": "2026-08-06", "getup_time": "08:00:00", "sleep_time": "23:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 2688, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 9, "fields": {"user": 3, "record_date": "2026-08-07", "getup_time": "07:30:00", "sleep_time": "23:00:00", "medicine_time": "22:30:00", "fatigue_getup": false, "fatigue_wholeday": false, "steps": 4898, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 10, "fields": {"user": 3, "record_date": "2026-08-08", "getup_time": "07:00:00", "sleep_time": "23:00:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 14649, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 11, "fields": {"user": 3, "record_date": "2026-08-09", "getup_time": "09:00:00", "sleep_time": "00:30:00", "medicine_time": "00:15:00", "fatigue_getup": false, "fatigue_wholeday": false, "steps": 7945, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 12, "fields": {"user": 3, "record_date": "2026-08-10", "getup_time": "08:00:00", "sleep_time": "23:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 7011, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 13, "fields": {"user": 3, "record_date": "2026-08-11", "getup_time": "08:30:00", "sleep_time": "23:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 1852, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 14, "fields": {"user": 3, "record_date": "2026-08-12", "getup_time": "07:00:00", "sleep_time": "23:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 3688, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 15, "fields": {"user": 3, "record_date": "2026-08-13", "getup_time": "08:00:00", "sleep_time": "23:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 3077, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 16, "fields": {"user": 3, "record_date": "2026-08-14", "getup_time": "07:30:00", "sleep_time": "23:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 3117, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 17, "fields": {"user": 3, "record_date": "2026-08-15", "getup_time": "08:00:00", "sleep_time": "00:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 5683, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 18, "fields": {"user": 3, "record_date": "2026-08-16", "getup_time": "07:30:00", "sleep_time": "23:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 6147, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 19, "fields": {"user": 3, "record_date": "2026-08-17", "getup_time": "07:30:00", "sleep_time": "00:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 3790, "memo": "寝る時にトラウマがフラッシュバックして、なかなか眠れませんでした。"}}, {"model": "lifeRecordApp.record", "pk": 21, "fields": {"user": 3, "record_date": "2026-08-18", "getup_time": "07:30:00", "sleep_time": "23:30:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 4201, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 22, "fields": {"user": 3, "record_date": "2026-08-19", "getup_time": "07:30:00", "sleep_time": "00:00:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 5714, "memo": ""}}, {"model": "lifeRecordApp.record", "pk": 23, "fields": {"user": 3, "record_date": "2026-08-20", "getup_time": "07:30:00", "sleep_time": "00:00:00", "medicine_time": null, "fatigue_getup": false, "fatigue_wholeday": false, "steps": 1000, "memo": ""}}]

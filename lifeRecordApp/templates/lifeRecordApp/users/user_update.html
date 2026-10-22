@@ -1,0 +1,53 @@
+{% extends "lifeRecordApp/users/users_base.html" %}
+
+{% block title %}ユーザー情報編集{% endblock %}
+
+{% block content %}
+<div class="user-edit-container">
+  <h1>ユーザー情報編集</h1>
+
+  <form method="POST" novalidate>
+    {% csrf_token %}
+
+    {# フォーム全体のエラーメッセージ表示 #}
+    {% if form.non_field_errors %}
+      <div class="non-field-errors">
+        {% for error in form.non_field_errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {# 各フィールドの表示 #}
+    {% for field in form %}
+      <div class="form-group {% if field.errors %}has-error{% endif %}">
+        {% if field.errors %}
+          {% for error in field.errors %}
+            <div class="form-error">
+              {{ error }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <label for="{{ field.id_for_label }}" class="field-label">
+          {{ field.label }}
+        </label>
+        
+        {{ field }}
+
+        {% if field.help_text %}
+          <small class="help-text">{{ field.help_text|safe }}</small>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <button type="submit">変更</button>
+  </form>
+
+  <div class="back-wrapper">
+    <button class="back-btn">
+      <a href="{% url "user_detail" request.user.id %}">ユーザー情報画面へ戻る</a>
+    </button>
+  </div>
+</div>
+{% endblock %}

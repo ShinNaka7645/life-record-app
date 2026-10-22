@@ -1,0 +1,41 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}職員コメント削除{% endblock %}
+
+{% block content %}
+<div class="delete-confirm-container">
+  <h3>このコメントを削除しますか？</h3>
+
+  <div class="delete-info-group">
+    <label>対象日</label>
+    <p class="period-text">{{ start_date|date:'Y/m/d' }} ～ {{ end_date|date:'Y/m/d' }}</p>
+  </div>
+
+  <div class="delete-info-group">
+    <label>対象の振り返り</label>
+    <div class="delete-preview-box">
+      {{ comment.review.review }}
+    </div>
+  </div>
+
+  <div class="delete-info-group">
+    <label>削除対象のコメント内容</label>
+    <div class="delete-preview-box">
+      {{ comment.content }}
+    </div>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">削除する</button>
+  </form>
+
+  <div class="back-wrapper">
+    <div class="back-btn">
+      <a href="{% url "record_index_staff" %}?date={{ start_date_str }}&user_id={{ user_id }}">
+        記録一覧へ戻る
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

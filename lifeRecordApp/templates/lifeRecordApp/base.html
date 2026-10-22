@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static "lifeRecordApp/style.css" %}">
+  <link rel="stylesheet" href="{% static "lifeRecordApp/chat.css" %}">
+  <link rel="stylesheet" href="{% static "lifeRecordApp/responsive.css" %}">
+  <script src="{% static "lifeRecordApp/flash.js" %}"></script>
+</head>
+<body>
+  {% if request.user.is_authenticated %}
+  <header>
+    <div class="header-icon">
+      <h3>生活・服薬記録シート</h3>
+    </div>
+
+    <ul class="header-menu">
+      <li>
+        <button>
+          <a href="{% url "user_detail" request.user.id %}">
+            {{ request.user.last_name }} {{ request.user.first_name }}
+          </a>
+        </button>
+      </li>
+      <li>
+        <button class="chat-btn-wrapper">
+          {% if request.user.is_staff %}
+            <a href="{% url "staff_chat_list" %}">
+              チャット
+            </a>
+          {% else %}
+            <a href="{% url "user_chat" %}">
+              チャット
+            </a>
+          {% endif %}
+          
+          {% if unread_chat_count > 0 %}
+            <span class="unread-badge">
+              {% if unread_chat_count > 99 %}99+{% else %}{{ unread_chat_count }}{% endif %}
+            </span>
+          {% endif %}
+        </button>
+      </li>
+      <li>
+        <button>
+          {% if request.user.is_staff %}
+            <a href="{% url "record_index_staff" %}">
+              生活記録
+            </a>
+          {% else %}
+            <a href="{% url "record_index" %}">
+              生活記録
+            </a>
+          {% endif %}
+        </button>
+      </li>
+      {% if request.user.is_staff %}
+        <li>
+          <button>
+            <a href="{% url "meeting_records" %}">
+              面談記録
+            </a>
+          </button>
+        </li>
+      {% endif %}
+      <li>
+        <button>
+          <a href="{% url "worksheet_index" %}">
+            ワークシート
+          </a>
+        </button>
+      </li>
+      <li>
+        <form method="POST" action="{% url "logout" %}">
+          {% csrf_token %}
+          <button type="submit">ログアウト</button>
+        </form>
+      </li>
+    </ul>
+  </header>
+  {% endif %}
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="flash {{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% block content %}
+  
+  {% endblock %}
+</body>
+</html>

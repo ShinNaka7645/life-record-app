@@ -1,0 +1,45 @@
+{% extends "lifeRecordApp/users/users_base.html" %}
+
+{% block title %}ユーザー情報{% endblock %}
+
+{% block content %}
+<div class="user-detail-container">
+  <h1>ユーザー情報</h1>
+
+  <dl class="user-info-list">
+    <dt>ユーザー名</dt>
+    <dd>{{ user.username }}</dd>
+
+    <dt>メールアドレス</dt>
+    <dd>{{ user.email|default:"未設定" }}</dd>
+
+    <dt>氏名</dt>
+    <dd>{{ user.last_name }} {{ user.first_name }}</dd>
+
+    <dt>ステータス</dt>
+    <dd>
+      {% if user.is_staff %}
+        <span class="status-badge staff">職員</span>
+      {% else %}
+        <span class="status-badge user">利用者</span>
+      {% endif %}
+    </dd>
+  </dl>
+
+  <div class="user-actions">
+    <button class="btn-edit">
+      <a href="{% url "user_update" user.id %}">ユーザー情報を編集</a>
+    </button>
+    
+    {% if user.is_staff %}
+      <button class="btn-back">
+        <a href="{% url "record_index_staff" %}">記録一覧へ戻る</a>
+      </button>
+    {% else %}
+      <button class="btn-back">
+        <a href="{% url "record_index" %}">記録一覧へ戻る</a>
+      </button>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

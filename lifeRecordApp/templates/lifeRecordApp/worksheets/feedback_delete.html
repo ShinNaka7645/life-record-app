@@ -1,0 +1,54 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}フィードバック削除{% endblock %}
+
+{% block content %}
+<div class="meeting-delete-container">
+  <h3>⚠️ このフィードバックを削除しますか？</h3>
+
+  <div class="meeting-delete-card">
+    <!-- 属性情報（2列レイアウトでスッキリ表示） -->
+    <div class="meeting-delete-meta">
+      <div class="meta-item">
+        <span class="label">対象の利用者</span>
+        <span class="value">{{ worksheet.user.last_name }} {{ worksheet.user.first_name }}</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">面談日</span>
+        <span class="value">{{ worksheet.meeting_date|date:'Y年m月d日' }}</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">担当職員</span>
+        <span class="value">{{ worksheet.staff.last_name }} {{ worksheet.staff.first_name }}</span>
+      </div>
+    </div>
+
+    <!-- 記録本文エリア（縦方向に独立させて見やすく表示） -->
+    <div class="meeting-delete-content">
+      <span class="label">今月取り組むこと</span>
+      <div class="content-body">{{ worksheet.works }}</div>
+    </div>
+    <div class="meeting-delete-content" style="padding-top: 10px;">
+      <span class="label">1か月後の気づき・感想</span>
+      <div class="content-body">{{ worksheet.thoughts }}</div>
+    </div>
+    <div class="meeting-delete-content" style="padding-top: 10px;">
+      <span class="label">職員からのフィードバック</span>
+      <div class="content-body">{{ worksheet.feedback }}</div>
+    </div>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">削除する</button>
+  </form>
+
+  <div class="back-wrapper">
+    <button class="back-btn">
+      <a href="{% url "worksheet_index" %}?page={{ page }}&user_id={{ user_id }}">
+        キャンセルして戻る
+      </a>
+    </button>
+  </div>
+</div>
+{% endblock %}

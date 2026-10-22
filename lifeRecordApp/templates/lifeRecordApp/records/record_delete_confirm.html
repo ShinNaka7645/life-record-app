@@ -1,0 +1,64 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}削除確認{% endblock %}
+
+{% block content %}
+<div class="record-delete-container">
+  <h3>⚠️ この記録を削除しますか？</h3>
+
+  <dl class="delete-preview-grid">
+    <dt>記録日</dt>
+    <dd>{{ record.record_date|date:"Y/m/d" }}</dd>
+
+    <dt>起床時間</dt>
+    <dd>{{ record.getup_time }}</dd>
+
+    <dt>就寝時間</dt>
+    <dd>{{ record.sleep_time }}</dd>
+
+    <dt>薬の服用時間</dt>
+    <dd>
+      {% if record.medicine_time %}
+        {{ record.medicine_time }}
+      {% else %}
+        服薬なし
+      {% endif %}
+    </dd>
+
+    <dt>起床時のだるさ</dt>
+    <dd>
+      {% if record.fatigue_getup %}
+        <span class="badge-fatigue-yes">あり</span>
+      {% else %}
+        なし
+      {% endif %}
+    </dd>
+
+    <dt>日中のだるさ</dt>
+    <dd>
+      {% if record.fatigue_wholeday %}
+        <span class="badge-fatigue-yes">あり</span>
+      {% else %}
+        なし
+      {% endif %}
+    </dd>
+
+    <dt>1日の歩数</dt>
+    <dd>{{ record.steps }} 歩</dd>
+
+    <dt>メモ</dt>
+    <dd>{{ record.memo|default:"なし" }}</dd>
+  </dl>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">削除する</button>
+  </form>
+
+  <div class="back-wrapper">
+    <button class="back-btn">
+      <a href="{% url "record_index" %}">キャンセルして戻る</a>
+    </button>
+  </div>
+</div>
+{% endblock %}

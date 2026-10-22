@@ -1,0 +1,106 @@
+{% extends 'lifeRecordApp/base.html' %}
+
+{% block content %}
+
+<div class="chat-container">
+  <div class="chat-header">
+    💬 職員とのサポートチャット
+  </div>
+
+  <div class="chat-messages" id="chat-messages">
+    {% for msg in messages_list %}
+      {% if msg.is_system_message %}
+        <div class="message-wrapper system">
+          <div class="message-bubble">{{ msg.message }}</div>
+          <div class="timestamp">{{ msg.created_at|date:"Y-m-d H:i" }}</div>
+        </div>
+      {% elif msg.sender == request.user %}
+        <div class="message-wrapper mine">
+          <div class="message-bubble">{{ msg.message }}</div>
+          <div class="timestamp">{{ msg.created_at|date:"Y-m-d H:i" }}</div>
+        </div>
+      {% else %}
+        <div class="message-wrapper other">
+          <div class="sender-name">{% if msg.sender %}{{ msg.sender.last_name }} {{ msg.sender.first_name }}{% else %}職員{% endif %}</div>
+          <div class="message-bubble">{{ msg.message }}</div>
+          <div class="timestamp">{{ msg.created_at|date:"Y-m-d H:i" }}</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="chat-input-area user-theme">
+    {% comment %} <input type="text" id="chat-message-input" class="chat-input" placeholder="メッセージを入力してください..." autocomplete="off"> {% endcomment %}
+    <textarea id="chat-message-input" class="chat-input"></textarea>
+    <button id="chat-message-submit" class="send-btn">送信</button>
+  </div>
+</div>
+
+<script>
+  const currentUserId = "{{ request.user.id }}";
+  const chatMessagesDom = document.getElementById('chat-messages');
+
+  // スクロールを最下部へ移動
+  function scrollToBottom() {
+    chatMessagesDom.scrollTop = chatMessagesDom.scrollHeight;
+  }
+  scrollToBottom();
+
+  // WebSocket接続設定
+  const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+  const chatSocket = new WebSocket(
+    `${wsScheme}://${window.location.host}/ws/chat/${currentUserId}/`
+  );
+
+  chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    const wrapper = document.createElement('div');
+
+    if (data.is_system_message) {
+      wrapper.className = 'message-wrapper system';
+      wrapper.innerHTML = `
+        <div class="message-bubble">${escapeHtml(data.message)}</div>
+        <div class="timestamp">${data.created_at}</div>
+      `;
+    } else if (data.sender_id == currentUserId) {
+      wrapper.className = 'message-wrapper mine';
+      wrapper.innerHTML = `
+        <div class="message-bubble">${escapeHtml(data.message)}</div>
+        <div class="timestamp">${data.created_at}</div>
+      `;
+    } else {
+      wrapper.className = 'message-wrapper other';
+      wrapper.innerHTML = `
+        <div class="sender-name">${escapeHtml(data.sender_username)}</div>
+        <div class="message-bubble">${escapeHtml(data.message)}</div>
+        <div class="timestamp">${data.created_at}</div>
+      `;
+    }
+
+    chatMessagesDom.appendChild(wrapper);
+    scrollToBottom();
+  };
+
+  // 送信処理
+  document.getElementById('chat-message-submit').onclick = function() {
+    const inputDom = document.getElementById('chat-message-input');
+    const message = inputDom.value;
+    if (message.trim() !== '') {
+      chatSocket.send(JSON.stringify({ 'message': message }));
+      inputDom.value = '';
+    }
+  };
+
+  {% comment %} document.getElementById('chat-message-input').onkeyup = function(e) {
+    if (e.key === 'Enter') {
+      document.getElementById('chat-message-submit').click();
+    }
+  }; {% endcomment %}
+
+  function escapeHtml(text) {
+    return text.replace(/[&<>"']/g, function(m) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+    });
+  }
+</script>
+{% endblock %}

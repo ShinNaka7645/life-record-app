@@ -1,0 +1,32 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}振り返り削除{% endblock %}
+
+{% block content %}
+<div class="delete-confirm-container">
+  <h3>⚠️ この振り返りを削除しますか？</h3>
+
+  <div class="delete-info-group">
+    <label>対象期間</label>
+    <div class="period-text">
+      {{ start_date|date:'Y/m/d' }} ～ {{ end_date|date:'Y/m/d' }}
+    </div>
+  </div>
+
+  <div class="delete-info-group">
+    <label>削除対象の振り返り内容</label>
+    <div class="delete-preview-box">{{ week_review.review }}</div>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">削除する</button>
+  </form>
+
+  <div class="back-wrapper">
+    <button class="back-btn">
+      <a href="{% url "record_index" %}?date={{ start_date_str }}">キャンセルして戻る</a>
+    </button>
+  </div>
+</div>
+{% endblock %}

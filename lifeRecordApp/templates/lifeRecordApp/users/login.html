@@ -1,0 +1,24 @@
+{% extends "lifeRecordApp/users/users_base.html" %}
+
+{% block title %}ログイン{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <h1>生活・服薬記録シート</h1>
+  <h3>ログイン</h3>
+  
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <!-- パスワードリセット画面へのリンク -->
+    <div style="margin-top: -10px; margin-bottom: 15px; text-align: right;">
+      <a href="{% url 'password_reset' %}" style="font-size: 0.9em;">パスワードをお忘れの方</a>
+    </div>
+    <button type="submit">ログイン</button>
+  </form>
+
+  <div class="signup-wrapper">
+    <button class="signup-btn"><a href="{% url "signup" %}">新規登録</a></button>
+  </div>
+</div>
+{% endblock %}

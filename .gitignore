@@ -1,0 +1,24 @@
+# Pythonの実行時に生成されるキャッシュファイル
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 仮想環境（venv / env フォルダ）
+venv/
+env/
+.venv/
+
+# Djangoのローカル用SQLiteデータベース
+*.sqlite3
+db.sqlite3
+
+# 環境変数（パスワードやAPIキーなどの機密情報）
+.env
+
+# 静的ファイルの集約用フォルダ（WhiteNoiseで生成されるもの）
+staticfiles/
+
+# OSやエディタ固有のファイル
+.DS_Store
+.vscode/
+.idea/

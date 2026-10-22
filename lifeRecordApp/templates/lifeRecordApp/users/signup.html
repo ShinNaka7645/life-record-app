@@ -1,0 +1,54 @@
+{% extends "lifeRecordApp/users/users_base.html" %}
+
+{% block title %}新規登録{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <h1>生活・服薬記録シート</h1>
+  <h3>新規登録</h3>
+
+  <form method="POST" novalidate>
+    {% csrf_token %}
+
+    {# フォーム全体に関わるエラー (例: パスワード不一致など) #}
+    {% if form.non_field_errors %}
+      <div class="non-field-errors">
+        {% for error in form.non_field_errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {# 各フィールドのループ表示 #}
+    {% for field in form %}
+      <div class="form-group {% if field.errors %}has-error{% endif %}">
+        
+        {% if field.errors %}
+          {% for error in field.errors %}
+            <div class="form-error">
+              {{ error }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <label for="{{ field.id_for_label }}" class="field-label">
+          {{ field.label }}
+        </label>
+        
+        {{ field }}
+
+        {# Django標準のヘルプテキスト（パスワードのルール等）がある場合表示 #}
+        {% if field.help_text %}
+          <small class="help-text">{{ field.help_text|safe }}</small>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <button type="submit">登録</button>
+  </form>
+
+  <div class="back-wrapper">
+    <button class="back-btn"><a href="{% url "login" %}">ログイン画面へ戻る</a></button>
+  </div>
+</div>
+{% endblock %}

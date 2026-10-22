@@ -1,0 +1,71 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}
+{% if request.user.is_staff %}
+  {% if worksheet.feedback %}フィードバックを編集{% else %}フィードバックを追加{% endif %}
+{% else %}
+  {% if worksheet %}ワークシート編集{% else %}ワークシート作成{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="record-form-container">
+  <h1>
+    {% if request.user.is_staff %}
+      {% if worksheet.feedback %}フィードバックを編集{% else %}フィードバックを追加{% endif %}
+    {% else %}
+      {% if worksheet %}ワークシート編集{% else %}ワークシート作成{% endif %}
+    {% endif %}
+  </h1>
+
+  <form method="POST" novalidate>
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="non-field-errors">
+        {% for error in form.non_field_errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% for field in form %}
+      <div class="form-group {% if field.errors %}has-error{% endif %}">
+        {% if field.errors %}
+          {% for error in field.errors %}
+            <div class="form-error">
+              {{ error }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <label for="{{ field.id_for_label }}" class="field-label">
+          {{ field.label }}
+        </label>
+        
+        {{ field }}
+
+        {% if field.help_text %}
+          <small class="help-text">{{ field.help_text|safe }}</small>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <button type="submit">保存</button>
+  </form>
+  
+  <div class="back-wrapper">
+    <button class="back-btn">
+      {% if request.user.is_staff %}
+        <a href="{% url "worksheet_index" %}?page={{ page }}&user_id={{ user_id }}">
+          ワークシート一覧へ戻る
+        </a>
+      {% else %}
+        <a href="{% url "worksheet_index" %}?page={{ page }}">
+          ワークシート一覧へ戻る
+        </a>
+      {% endif %}
+    </button>
+  </div>
+</div>
+{% endblock %}

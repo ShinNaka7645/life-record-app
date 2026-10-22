@@ -1,0 +1,62 @@
+[
+  {
+    "model": "lifeRecordApp.record",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "record_date": "2026-07-30",
+      "getup_time": "07:30:00",
+      "sleep_time": "23:30:00",
+      "medicine_time": "23:30:00",
+      "fatigue_getup": false,
+      "fatigue_wholeday": false,
+      "steps": 3813,
+      "memo": ""
+    }
+  },
+  {
+    "model": "lifeRecordApp.record",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "record_date": "2026-07-31",
+      "getup_time": "08:00:00",
+      "sleep_time": "00:00:00",
+      "medicine_time": null,
+      "fatigue_getup": false,
+      "fatigue_wholeday": false,
+      "steps": 3728,
+      "memo": ""
+    }
+  },
+  {
+    "model": "lifeRecordApp.record",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "record_date": "2026-08-01",
+      "getup_time": "08:30:00",
+      "sleep_time": "23:30:00",
+      "medicine_time": null,
+      "fatigue_getup": false,
+      "fatigue_wholeday": false,
+      "steps": 4676,
+      "memo": "昨夜寝る前にストレッチをしたら、自然と眠れました。"
+    }
+  },
+  {
+    "model": "lifeRecordApp.record",
+    "pk": 4,
+    "fields": {
+      "user": 1,
+      "record_date": "2026-08-02",
+      "getup_time": "08:30:00",
+      "sleep_time": "00:30:00",
+      "medicine_time": null,
+      "fatigue_getup": false,
+      "fatigue_wholeday": false,
+      "steps": 7210,
+      "memo": ""
+    }
+  }
+]

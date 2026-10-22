@@ -1,0 +1,143 @@
+{% extends "lifeRecordApp/base.html" %}
+
+{% block title %}記録一覧{% endblock %}
+
+{% block content %}
+<div class="record-container">
+  
+  <div class="record-header-title">
+    <h1>1週間の記録</h1>
+    <button class="btn-primary-add">
+      <a href="{% url "record_create" %}">＋ 記録の追加</a>
+    </button>
+  </div>
+
+  <div class="week-navigation-card">
+    <div class="week-period-info">
+      <span class="period-title">期間: {{ start_date|date:"Y/m/d" }} ～ {{ end_date|date:"Y/m/d" }}</span>
+    </div>
+
+    <div class="week-nav-links">
+      <a href="{% url 'record_index' %}?date={{ prev_week_str }}">&laquo; 前の週</a>
+      <a href="{% url 'record_index' %}" class="btn-current-week">今週を表示</a>
+      <a href="{% url 'record_index' %}?date={{ next_week_str }}">次の週 &raquo;</a>
+    </div>
+  </div>
+
+  {% if records %}
+    <div class="table-wrapper">
+      <table class="record-table">
+        <thead>
+          <tr>
+            <th>日付</th>
+            <th>起床時間</th>
+            <th>就寝時間</th>
+            <th>服薬時間</th>
+            <th>起床時のだるさ</th>
+            <th>日中のだるさ</th>
+            <th>歩数</th>
+            <th>メモ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in records %}
+            <tr>
+              <td>
+                <!-- 一昨日までの日付のみ編集可能 -->
+                {% if record.record_date == today or record.record_date == yesterday or record.record_date == day_before_yesterday %}
+                  <a href="{% url "record_update" record.id %}">
+                    {{ record.record_date|date:"m/d" }}
+                  </a>
+                {% else %}
+                  {{ record.record_date|date:"m/d" }}
+                {% endif %}
+              </td>
+              <td>{{ record.getup_time }}</td>
+              <td>{{ record.sleep_time }}</td>
+              <td>{{ record.medicine_time|default:"服薬なし" }}</td>
+              <td>
+                {% if record.fatigue_getup %}
+                  <span class="badge-fatigue-yes">あり</span>
+                {% else %}
+                  <span class="badge-fatigue-no">なし</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if record.fatigue_wholeday %}
+                  <span class="badge-fatigue-yes">あり</span>
+                {% else %}
+                  <span class="badge-fatigue-no">なし</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if record.steps %}
+                  {{ record.steps }}
+                {% else %}
+                  未記入
+                {% endif %}
+              </td>
+              <td style="text-align: left;">
+                {% if record.memo %}
+                  {{ record.memo }}
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="table-wrapper">
+      <p class="empty-msg">この期間の記録はありません。</p>
+    </div>
+  {% endif %}
+
+  <!-- 振り返りとコメントの2列カードレイアウト -->
+  <div class="card-section">
+    <!-- 振り返りカード -->
+    <div class="info-card">
+      <h3>📝 1週間の振り返り</h3>
+      {% if week_review %}
+        <div class="card-body-text" style="white-space: pre-wrap;">{{ week_review.review }}</div>
+        <!-- 今週か先週の週のみ編集・削除ボタンを表示 -->
+        {% if is_editable %}
+          <div class="card-btn-group">
+            <button class="btn-card-action">
+              <a href="{% url "weekreview_update" week_review.id %}">編集</a>
+            </button>
+            <button class="btn-card-action btn-card-delete">
+              <a href="{% url "weekreview_delete" week_review.id %}">削除</a>
+            </button>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="card-body-text empty-msg">振り返りが登録されていません。</div>
+        <!-- 今週か先週の週のみ作成ボタンを表示 -->
+        {% if is_editable %}
+          <div class="card-btn-group">
+            <button class="btn-card-action">
+              <a href="{% url "weekreview_create" %}?start_date={{ start_date|date:"Y-m-d" }}">
+                振り返りを作成
+              </a>
+            </button>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <!-- 職員からのコメントカード -->
+    <div class="info-card">
+      <h3>💬 職員からのコメント</h3>
+      {% if comment %}
+        <div class="card-body-text" style="white-space: pre-wrap;">{{ comment.content }}</div>
+        <div class="card-footer-info">
+          担当: {{ comment.user.last_name }} {{ comment.user.first_name }}
+        </div>
+      {% else %}
+        <div class="card-body-text empty-msg">まだコメントはありません。</div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,17 +1,21 @@
-# HTTP と WebSocket のルーティングを振り分ける
 import os
 from django.core.asgi import get_asgi_application
-from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.auth import AuthMiddlewareStack
-import lifeRecordApp.routing
 
+# 環境変数を指定
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'armeria_project.settings')
 
+# Djangoの初期化を先に実行
+django_asgi_app = get_asgi_application()
+
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.auth import AuthMiddlewareStack
+from lifeRecordApp.routing import websocket_urlpatterns
+
 application = ProtocolTypeRouter({
-  "http": get_asgi_application(),
+  "http": django_asgi_app,
   "websocket": AuthMiddlewareStack(
     URLRouter(
-      lifeRecordApp.routing.websocket_urlpatterns
+      websocket_urlpatterns
     )
   ),
 })

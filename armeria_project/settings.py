@@ -122,6 +122,17 @@ CHANNEL_LAYERS = {
     },
 }
 
+# ALLOWED_HOSTS にRenderのドメインを登録
+ALLOWED_HOSTS = [
+    'life-record-app.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://life-record-app.onrender.com'
+]
+
 # ターミナルにメール本文を表示してテスト設定
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

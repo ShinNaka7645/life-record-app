@@ -1,8 +1,12 @@
 import os
 import dj_database_url
 from pathlib import Path
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# .env ファイルのパスを指定して読み込む
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # --- セキュリティ設定 ---
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7mq9o*a($#829*-9u=(36tny#=gb^f=3a=ix_8*_3ml31v$$5m')
@@ -133,14 +137,13 @@ CSRF_TRUSTED_ORIGINS = [
     'https://life-record-app.onrender.com'
 ]
 
-# ターミナルにメール本文を表示してテスト設定
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-# 実際にメールアドレス宛に送信する設定
+# メール送信設定
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'yu-kari@1-page.jp'       # 送信元のメールアドレス
-EMAIL_HOST_PASSWORD = 'hxafbtnurajilebe'       # アプリパスワード
-DEFAULT_FROM_EMAIL = '生活記録アプリ <yu-kari@1-page.jp>'
+# 環境変数から読み込む
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+# 送信元表示名
+DEFAULT_FROM_EMAIL = f'生活記録アプリ <{EMAIL_HOST_USER}>'

@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',  # 静的ファイル配信
     'django.contrib.staticfiles',
+    'anymail',
     'lifeRecordApp',
 ]
 
@@ -137,13 +138,14 @@ CSRF_TRUSTED_ORIGINS = [
     'https://life-record-app.onrender.com'
 ]
 
-# メール送信設定
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-# 環境変数から読み込む
+# SMTPではなく Anymail の Brevo バックエンドを指定
+EMAIL_BACKEND = 'anymail.backends.brevo.EmailBackend'
+
+# Anymail の設定
+ANYMAIL = {
+    'BREVO_API_KEY': os.environ.get('BREVO_API_KEY'),
+}
+
+# 送信元表示名とアドレス
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-# 送信元表示名
 DEFAULT_FROM_EMAIL = f'生活記録アプリ <{EMAIL_HOST_USER}>'

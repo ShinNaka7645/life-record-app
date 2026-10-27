@@ -111,7 +111,14 @@ USE_TZ = True
 # --- 静的ファイル（CSS / JS）配信設定 ---
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# DEBUGの状態（開発か本番か）によってストレージを切り替える
+if DEBUG:
+    # ローカル環境用（通常の配信）
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+else:
+    # 本番環境（Render）用：WhiteNoiseで圧縮・マニフェスト化
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_URL = '/'
 # LOGIN_REDIRECT_URL = 'life_record/record_index/'

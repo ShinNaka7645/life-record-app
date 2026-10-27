@@ -14,10 +14,16 @@
   {% if request.user.is_authenticated %}
   <header>
     <div class="header-icon">
+      <!-- ▼ メニューアイコン（ハンバーガーボタン）を追加 -->
+      <button class="menu-toggle" id="menuToggle" aria-label="メニューを開閉">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <h3>生活・服薬記録シート</h3>
     </div>
 
-    <ul class="header-menu">
+    <ul class="header-menu" id="headerMenu">
       <li>
         <button>
           <a href="{% url "user_detail" request.user.id %}">
@@ -76,7 +82,7 @@
       <li>
         <form method="POST" action="{% url "logout" %}">
           {% csrf_token %}
-          <button type="submit">ログアウト</button>
+          <button type="submit" class="logout-btn">ログアウト</button>
         </form>
       </li>
     </ul>

@@ -71,17 +71,41 @@
 @media (max-width: 600px) {
   header {
     flex-direction: column;
-    gap: 12px;
-    padding: 12px 16px;
+    gap: 14px;
+    padding: 16px;
   }
 
   .header-icon h3 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    text-align: center;
   }
 
+  /* メニュー全体を縦方向のリスト形式にする */
   .header-menu {
     width: 100%;
-    justify-content: center;
+    flex-direction: column; /* 縦並びに変更 */
+    gap: 8px;               /* 項目間の隙間 */
+  }
+
+  .header-menu li {
+    width: 100%;
+  }
+
+  /* 各ボタンやリンクを横幅いっぱいに広げ、文字の不自然な改行を防ぐ */
+  .header-menu button,
+  .header-menu li:first-child button,
+  .header-menu form button {
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 10px 16px;
+    white-space: nowrap;    /* 文字が途中で勝手に改行されるのを防ぐ */
+  }
+
+  .header-menu li:first-child button a,
+  .header-menu li button a {
+    display: block;
+    width: 100%;
   }
 
   .flash {
@@ -111,6 +135,27 @@
     justify-content: space-between;
   }
 
+  /* スマホでは固定レイアウトを解除し、最小幅を持たせて横スクロールさせる */
+  .record-table {
+    table-layout: auto;
+    min-width: 700px; /* テーブルが縮みすぎないようにし、スワイプで閲覧させる */
+    font-size: 0.85rem;
+  }
+
+  /* セルごとの余白を少しコンパクトにする */
+  .record-table th,
+  .record-table td {
+    padding: 8px 6px;
+    white-space: nowrap; /* 時間や日付などの基本データが不自然に改行されないようにする */
+  }
+
+  /* メモ列（8番目の列）だけは長文が入るため折り返しを許可し、幅を確保する */
+  .record-table td:nth-child(8) {
+    white-space: normal;
+    min-width: 160px;
+    text-align: left;
+  }
+  
   .card-section {
     grid-template-columns: 1fr; /* スマホでは上下2段に */
   }
@@ -132,5 +177,154 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
+  }
+}
+
+/* ==========================================================================
+  ハンバーガーメニュー & ヘッダー調整
+  ========================================================================== */
+@media (max-width: 768px) {
+  header {
+    position: relative;
+    flex-wrap: wrap;
+  }
+
+  /* ヘッダーアイコン（アイコン ＋ タイトル） */
+  .header-icon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* メニューアイコン（≡）のデザイン */
+  .menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    padding: 0;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #2c3e50;
+    transition: all 0.3s ease;
+  }
+
+  /* アイコンクリック時のアニメーション（バツ印へ変形） */
+  .menu-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* メニューの初期状態（スマホ等での折りたたみ & アニメーション設定） */
+  .header-menu {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    list-style: none;
+  }
+
+  /* 各ボタンのスタイル（背景なし・黒文字） */
+  .header-menu button,
+  .header-menu li:first-child button,
+  .header-menu form button,
+  .header-menu li button {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 4px 0 !important;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 0 !important;
+  }
+
+  .header-menu a,
+  .header-menu button,
+  .header-menu form button {
+    color: #333333 !important; /* 基本は黒文字 */
+    text-decoration: none;
+  }
+
+  .header-menu a:hover,
+  .header-menu button:hover {
+    color: #2a9d8f !important; /* ホバー時のアクセントカラー */
+  }
+
+  /* 「ログアウト」だけを赤文字にする */
+  .header-menu .logout-btn,
+  .header-menu form button[type="submit"] {
+    color: #e63946 !important;
+  }
+  .header-menu .logout-btn:hover,
+  .header-menu form button[type="submit"]:hover {
+    color: #d90429 !important;
+  }
+}
+
+/* --- スマホ・タブレット時のドロップダウン挙動 --- */
+@media (max-width: 768px) {
+  .header-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 24px;
+    max-height: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* スムーズな開閉アニメーション */
+    transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out;
+    gap: 0;
+    z-index: 99;
+  }
+
+  /* クラス .active が付くとリストが展開する */
+  .header-menu.active {
+    max-height: 80vh;  /* 画面の高さの80%を最大値にする（画面からはみ出さない） */
+    overflow-y: auto;  /* 項目が多くて入り切らない場合は、メニュー内でスクロールできるようにする */
+    padding: 16px 24px;
+    gap: 12px;
+  }
+
+  .header-menu li {
+    width: 100%;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 8px;
+  }
+
+  .header-menu li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .header-menu button,
+  .header-menu li:first-child button,
+  .header-menu form button,
+  .header-menu li button {
+    width: 100%;
+    text-align: left;
+    padding: 6px 0 !important;
+  }
+
+  .header-menu li button a,
+  .header-menu li:first-child button a {
+    display: block;
+    width: 100%;
   }
 }

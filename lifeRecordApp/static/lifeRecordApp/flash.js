@@ -14,3 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 3000); // 3秒後
   });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const menuToggle = document.getElementById('menuToggle');
+  const headerMenu = document.getElementById('headerMenu');
+
+  if (menuToggle && headerMenu) {
+    menuToggle.addEventListener('click', function() {
+      headerMenu.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+    });
+  }
+});
